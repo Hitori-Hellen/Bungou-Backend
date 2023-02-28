@@ -1,18 +1,34 @@
 const { Model } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => sequelize.define('User', {
-    id: {
-        type: DataTypes.INTERGER,
+module.exports = (sequelize, DataTypes) => {sequelize.define('User', {
+    UserId: {
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
     },
-    username: {
+    Username: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    Password: {
         type: DataTypes.STRING,
         allowNull: false
-    }
+    },
+    Useremail: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 });
+models.User.belongsToMany(models.User, {
+    through: models.UserRole,
+    foreignKey: 'UserId',
+    otherKey: 'RoleId'
+})
+models.User.hasMany(models.Review, {
+    foreignKey: 'ReviewId'
+})
+models.User.hasMany(models.Order, {
+    foreignKey: 'OrderId'
+})
+};
