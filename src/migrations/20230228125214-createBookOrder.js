@@ -1,27 +1,27 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const DataTypes = require('sequelize')
+    const DataTypes = require("sequelize");
     return queryInterface.createTable("BookOrder", {
       BookOrderId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        allowNull: false
-    },
-    BookId: {
+        allowNull: false,
+      },
+      BookId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Book',
-            key: 'BookId'
-        }
-    },
-    OrderId: {
+          model: "Book",
+          key: "BookId",
+        },
+      },
+      OrderId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'Order',
-            key: 'OrderId'
-        }
-    },
+          model: "Order",
+          key: "OrderId",
+        },
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

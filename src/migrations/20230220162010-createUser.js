@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const DataTypes = require('sequelize')
+    const DataTypes = require("sequelize");
     return queryInterface.createTable("User", {
       UserId: {
         type: DataTypes.INTEGER,
