@@ -14,7 +14,7 @@ const Category = sequelize.define('Category', {
 })
 models.Category.belongsToMany(models.Category, {
     through: models.BookCategory,
-    foreighnKey: 'CategoryId',
+    foreignKey: 'CategoryId',
     otherKey: 'BookId',
 })
 
