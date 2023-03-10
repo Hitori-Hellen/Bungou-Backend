@@ -5,8 +5,8 @@ module.exports = {
       UserId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "User",
-          key: "UserId",
+          model: "Users",
+          key: "id",
         },
       },
       RoleId: {
