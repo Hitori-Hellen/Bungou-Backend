@@ -22,6 +22,7 @@ export const login = async (req, res) => {
     const response = await services.login(req.body);
     return res.status(200).json(response);
   } catch (error) {
+    console.log(error);
     return interalServerError(res);
   }
 };
