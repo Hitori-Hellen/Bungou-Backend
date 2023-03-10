@@ -12,8 +12,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         type: DataTypes.INTEGER,
         references: {
-          model: "User",
-          key: "UserId",
+          model: "Users",
+          key: "id",
         },
       },
       createAt: {
