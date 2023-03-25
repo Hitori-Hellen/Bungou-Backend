@@ -1,5 +1,4 @@
 import * as services from "./service";
-import * as db from "../../models/model";
 
 import {
   interalServerError,
