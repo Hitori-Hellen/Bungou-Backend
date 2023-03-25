@@ -1,0 +1,59 @@
+Arguments: 
+  /usr/local/bin/node /Users/quangkhai/Library/pnpm/global/5/node_modules/yarn/bin/yarn.js
+
+PATH: 
+  /Users/quangkhai/Library/pnpm:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/quangkhai/.zsh/misc:/Users/quangkhai/Library/pnpm:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/quangkhai/.fig/bin:/Users/quangkhai/.local/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Users/quangkhai/.rvm/bin:/Users/quangkhai/FlutterSDK/flutter/bin:/Applications/development/flutter/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/usr/local/bin:/Users/quangkhai/.rvm/bin:/Users/quangkhai/FlutterSDK/flutter/bin:/Applications/development/flutter/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.13.1
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/Users/quangkhai/Library/Caches/Yarn/v6/npm-lru-cache-6.0.0-6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94-integrity/node_modules/lru-cache/README.md' -> '/Users/quangkhai/DOAN/Bungou-Backend/node_modules/sequelize/node_modules/lru-cache/README.md'
+
+npm manifest: 
+  {
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "nodemon --exec babel-node index.js",
+      "swagger-autogen": "node ./src/swagger.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "@babel/preset-env": "^7.20.2",
+      "bcrypt": "^5.1.0",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "helmet": "^6.0.1",
+      "joi": "^17.8.3",
+      "jsonwebtoken": "^9.0.0",
+      "mysql2": "^3.1.2",
+      "nodemon": "^2.0.20",
+      "sequelize": "^6.28.1",
+      "sequelize-cli": "^6.6.0",
+      "swagger-jsdoc": "^6.2.8",
+      "swagger-ui-express": "^4.6.0"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.21.0",
+      "@babel/node": "^7.20.7",
+      "swagger-autogen": "^2.23.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
