@@ -80,3 +80,19 @@ export const login = async ({ email, password }) => {
     access_token: accessToken ? `Bearer ${accessToken}` : accessToken,
   };
 };
+
+export const changePwdUser = async (userId, body) => {
+  const id = userId;
+  const newPassword = hashPassword(body.newPassword);
+  const user = await db.User.findByPk(id);
+  if (!user) {
+    return {
+      mes: "user không tồn tại",
+    };
+  }
+  user.password = newPassword;
+  await user.save();
+  return {
+    mes: "success",
+  };
+};

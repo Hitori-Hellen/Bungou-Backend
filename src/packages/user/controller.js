@@ -37,3 +37,14 @@ export const getInfo = async (req, res) => {
     return interalServerError(res);
   }
 };
+
+export const changePwd = async (req, res) => {
+  try {
+    const response = await services.changePwdUser(req.user.id, req.body);
+
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return interalServerError(res);
+  }
+};
