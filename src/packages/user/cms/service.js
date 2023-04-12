@@ -1,4 +1,5 @@
 import * as db from "../../../models/model";
+import { Op } from "sequelize";
 
 export const getAllUsers = async (req) => {
   let {
@@ -9,6 +10,11 @@ export const getAllUsers = async (req) => {
   limit = parseInt(limit) || 10; // default to 10 items per page
 
   const { count, rows } = await db.User.findAndCountAll({
+    where: {
+      name: {
+        [Op.like]: `%${keyword}%`,
+      },
+    },
     limit,
     offset: (page - 1) * limit,
   });

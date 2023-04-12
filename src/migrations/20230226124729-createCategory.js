@@ -1,7 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const DataTypes = require("sequelize");
-    return queryInterface.createTable("Category", {
+    return queryInterface.createTable("Categories", {
       CategoryId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -15,6 +15,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Category");
+    return queryInterface.dropTable("Categories");
   },
 };

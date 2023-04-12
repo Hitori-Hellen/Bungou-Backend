@@ -1,21 +1,28 @@
-const { Model, sequelize } = require('sequelize');
+import Books from "../book/model";
+import BookCategories from "../bookcategory/model";
 
-const Category = sequelize.define('Category', {
-    CategoryId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    type: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-})
-models.Category.belongsToMany(models.Category, {
-    through: models.BookCategory,
-    foreignKey: 'CategoryId',
-    otherKey: 'BookId',
-})
+const { Model, sequelize, DataTypes } = require("sequelize");
+const { dbConfig } = require("../../db/db");
 
-module.exports = Category;
+const Categories = dbConfig.define("Categories", {
+  CategoryId: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
+
+setTimeout(() => {
+  Categories.belongsToMany(Books, {
+    through: BookCategories,
+    foreignKey: "CategoryId",
+    as: "books",
+  });
+});
+
+export default Categories;
