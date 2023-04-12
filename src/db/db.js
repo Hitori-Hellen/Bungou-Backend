@@ -7,7 +7,10 @@ export const dbConfig = new Sequelize(
   {
     host: "localhost",
     dialect: "mysql",
-  }
+    define: {
+      timestamps: false
+    },
+  },
 );
 // DB_USERNAME = root;
 // DB_PASSWORD = Khai141296;

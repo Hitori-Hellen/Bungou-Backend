@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Khai141296",
+    "password": "password",
     "database": "DOAN",
     "host": "127.0.0.1",
     "dialect": "mysql"

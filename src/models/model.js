@@ -1,7 +1,7 @@
 import User from "../packages/user/model";
 // import Role from "../packages/role/model";
 // import UserRole from "../packages/userrole/model";
-// import Book from "../packages/book/model";
+import Book from "../packages/book/model";
 // import Category from "../packages/category/model";
 // import BookCategory from "../packages/bookcategory/model";
 // import Review from "../packages/review/model";
@@ -12,7 +12,7 @@ export {
   User,
   //   Role,
   //   UserRole,
-  //   Book,
+  Book,
   //   Category,
   //   BookCategory,
   //   Review,
