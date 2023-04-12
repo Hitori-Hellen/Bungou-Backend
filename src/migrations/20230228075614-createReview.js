@@ -11,7 +11,7 @@ module.exports = {
       BookId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Book",
+          model: "Books",
           key: "BookId",
         },
       },

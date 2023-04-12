@@ -1,23 +1,28 @@
-const {Model, DataTypes} = require('sequelize');
-const { Book, Category } = require('../../models/model');
+const { Model, DataTypes } = require("sequelize");
+const { Book, Category, Categories, Books } = require("../../models/model");
+const { dbConfig } = require("../../db/db");
 
-const BookCategory = sequelize.define('BookCategory', {
-    BookId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Book,
-            key: 'BookId'
-        }
+const BookCategories = dbConfig.define("BookCategories", {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+
+  BookId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Books,
+      key: "BookId",
     },
-    CategoryId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Category,
-            key: 'CategoryId'
-        }
-    }
+  },
+  CategoryId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Categories,
+      key: "CategoryId",
+    },
+  },
 });
-BookCategory.belongsTo(models.Book, {foreignKey: 'BookId'});
-BookCategory.belongsTo(models.Category, {foreignKey: 'CategoryId'});
 
-module.exports = BookCategory
+export default BookCategories;

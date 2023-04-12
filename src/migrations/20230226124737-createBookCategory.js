@@ -1,24 +1,29 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const DataTypes = require("sequelize");
-    return queryInterface.createTable("BookCategory", {
+    return queryInterface.createTable("BookCategories", {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       BookId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Book",
+          model: "Books",
           key: "BookId",
         },
       },
       CategoryId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Category",
+          model: "Categories",
           key: "CategoryId",
         },
       },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("BookCategory");
+    return queryInterface.dropTable("BookCategories");
   },
 };
