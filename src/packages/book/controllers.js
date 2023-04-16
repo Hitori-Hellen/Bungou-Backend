@@ -2,7 +2,7 @@ import * as services from "./services";
 
 export const getAllBook = async (req, res) => {
   try {
-    const response = await services.getAllBook();
+    const response = await services.getAllBook(req.query);
     return res.status(200).json(response);
   } catch (error) {
     console.log(error);
