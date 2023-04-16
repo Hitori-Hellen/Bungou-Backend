@@ -49,6 +49,10 @@ const Book = dbConfig.define("Book", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  categories: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 // models.Book.belongsToMany(models.Book, {
 //   through: models.BookCategory,

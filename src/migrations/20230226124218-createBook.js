@@ -48,6 +48,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      categories: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
