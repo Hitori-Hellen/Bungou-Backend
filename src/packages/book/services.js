@@ -3,14 +3,14 @@ import * as db from "../../models/model";
 const { Op } = require("sequelize");
 
 export const getAllBook = async () => {
-  const response = await db.Book.findAll({
+  const response = await db.Books.findAll({
     limit: 25,
   });
   return response;
 };
 
 export const getBookById = async (id) => {
-  const response = await db.Book.findOne({
+  const response = await db.Books.findOne({
     where: {
       BookId: id,
     },
@@ -20,7 +20,7 @@ export const getBookById = async (id) => {
 
 export const getBookByTitle = async (title) => {
   let name = title.split("_").join(" ");
-  const response = await db.Book.findOne({
+  const response = await db.Books.findOne({
     where: {
       title: name,
     },
@@ -29,7 +29,7 @@ export const getBookByTitle = async (title) => {
 };
 
 export const searchBookByTitle = async (title) => {
-  const response = await db.Book.findAll({
+  const response = await db.Books.findAll({
     limit: 10,
     where: {
       title: {
@@ -38,4 +38,11 @@ export const searchBookByTitle = async (title) => {
     },
   });
   return response;
+};
+
+export const test = async () => {
+  // const response = await Books.findAll({
+  //   include: [{ model: Categories, as: "categories" }],
+  // });
+  // return response;
 };

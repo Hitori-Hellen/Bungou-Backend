@@ -2,7 +2,7 @@ import { dbConfig } from "../../db/db";
 
 const { Model, DataTypes } = require("sequelize");
 
-const Book = dbConfig.define("Book", {
+const Books = dbConfig.define("Books", {
   BookId: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -54,11 +54,11 @@ const Book = dbConfig.define("Book", {
     allowNull: false,
   },
 });
-// models.Book.belongsToMany(models.Book, {
-//   through: models.BookCategory,
-//   foreignKey: "BookId",
-//   otherKey: "CategoryId",
-// });
+
+setTimeout(() => {
+  //
+});
+
 // models.Book.hasMany(models.Review, {
 //   foreignKey: "ReviewId",
 // });
@@ -67,4 +67,4 @@ const Book = dbConfig.define("Book", {
 //   foreignKey: "BookId",
 //   otherKey: "OrderId",
 // });
-module.exports = Book;
+export default Books;
