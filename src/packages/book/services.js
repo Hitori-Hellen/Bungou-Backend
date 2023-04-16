@@ -1,6 +1,5 @@
 import { dbConfig } from "../../db/db";
 import * as db from "../../models/model";
-import Categories from "../category/model";
 import Books from "./model";
 const { Op } = require("sequelize");
 
@@ -43,8 +42,8 @@ export const searchBookByTitle = async (title) => {
 };
 
 export const test = async () => {
-  const response = await Books.findAll({
-    include: [{ model: Categories, as: "categories" }],
-  });
+  // const response = await Books.findAll({
+  //   include: [{ model: Categories, as: "categories" }],
+  // });
   return response;
 };

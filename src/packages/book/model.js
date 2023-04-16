@@ -1,6 +1,4 @@
 import { dbConfig } from "../../db/db";
-import BookCategories from "../bookcategory/model";
-import Categories from "../category/model";
 
 const { Model, DataTypes } = require("sequelize");
 
@@ -51,14 +49,18 @@ const Books = dbConfig.define("Books", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  categories: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 setTimeout(() => {
-  Books.belongsToMany(Categories, {
-    through: BookCategories,
-    foreignKey: "BookId",
-    as: "categories",
-  });
+  // Books.belongsToMany(Categories, {
+  //   through: BookCategories,
+  //   foreignKey: "BookId",
+  //   as: "categories",
+  // });
 });
 
 // models.Book.hasMany(models.Review, {
