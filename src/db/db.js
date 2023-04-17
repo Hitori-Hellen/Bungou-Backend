@@ -5,7 +5,7 @@ export const dbConfig = new Sequelize(
   `${process.env.DB_USERNAME}`,
   `${process.env.DB_PASSWORD}`,
   {
-    host: "localhost",
+    host: "bookdbserver1.mysql.database.azure.com",
     dialect: "mysql",
     define: {
       timestamps: false
