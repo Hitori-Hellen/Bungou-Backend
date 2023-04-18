@@ -1,11 +1,14 @@
-import * as db from "../../models/model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import User from "./model";
+import crypto from "crypto";
+import { Op } from "sequelize";
+import { sendResetTokenEmail } from "../../lib/nodemailer";
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 export const register = async ({ email, password, firstName, lastName }) => {
-  const response = await db.User.findOrCreate({
+  const response = await User.findOrCreate({
     where: { email },
     defaults: {
       firstName,
@@ -27,7 +30,7 @@ export const register = async ({ email, password, firstName, lastName }) => {
     : null;
 
   if (accessToken) {
-    await db.User.update(
+    await User.update(
       { accessToken: accessToken },
       {
         where: {
@@ -44,7 +47,7 @@ export const register = async ({ email, password, firstName, lastName }) => {
 };
 
 export const login = async ({ email, password }) => {
-  const response = await db.User.findOne({
+  const response = await User.findOne({
     where: { email },
     raw: true,
   });
@@ -61,7 +64,7 @@ export const login = async ({ email, password }) => {
       )
     : null;
   if (accessToken) {
-    await db.User.update(
+    await User.update(
       { accessToken: accessToken },
       {
         where: {
@@ -84,7 +87,7 @@ export const login = async ({ email, password }) => {
 export const changePwdUser = async (userId, body) => {
   const id = userId;
   const newPassword = hashPassword(body.newPassword);
-  const user = await db.User.findByPk(id);
+  const user = await User.findByPk(id);
   if (!user) {
     return {
       mes: "user không tồn tại",
@@ -95,4 +98,80 @@ export const changePwdUser = async (userId, body) => {
   return {
     mes: "success",
   };
+};
+
+export const updateOne = async (id, body) => {
+  const user = User.findByPk(id);
+  if (!user) {
+    return {
+      mes: "user không tồn tại",
+    };
+  }
+
+  await User.update(
+    { ...body },
+    {
+      where: { id },
+    }
+  );
+  return true;
+};
+
+export const requestResetPwd = async (body) => {
+  // Tìm kiếm User theo email
+  const user = await User.findOne({ where: { email: body.email } });
+  if (!user) {
+    return {
+      error: "email không tồn tại",
+    };
+  }
+
+  // Tạo resetToken ngẫu nhiên
+  const randomNumbers = Array.from(
+    { length: 4 },
+    () => Math.floor(Math.random() * 10) + 1
+  );
+  // Cập nhật resetToken và resetTokenExpiry cho User
+  const data = {
+    resetToken: randomNumbers.join(""),
+    resetTokenExpiry: new Date(Date.now() + 60000),
+  };
+  await user.update({ ...data });
+  sendResetTokenEmail(user.email, randomNumbers.join(""));
+  return {
+    mes: "success",
+    resetToken: randomNumbers.join(""),
+  };
+};
+
+export const resetPwd = async (body) => {
+  const { email, resetToken, newPassword } = body;
+  const user = await User.findOne({
+    where: {
+      email,
+      resetToken,
+      resetTokenExpiry: {
+        [Op.gt]: new Date(), // Kiểm tra xem resetToken có còn hiệu lực hay không
+      },
+    },
+  });
+  console.log(user);
+
+  if (!user) {
+    return { error: "resetToken không tồn tại" };
+  }
+
+  // Mã hóa mật khẩu mới
+  const hashedPassword = hashPassword(newPassword);
+
+  // Cập nhật mật khẩu mới cho User
+  const data = {
+    password: hashedPassword,
+    resetToken: null,
+    resetTokenExpiry: null,
+  };
+  await user.update({ ...data });
+
+  // Trả về thành công
+  return true;
 };

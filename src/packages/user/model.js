@@ -29,6 +29,14 @@ const User = dbConfig.define("User", {
     type: DataTypes.STRING(300),
     allowNull: true,
   },
+  resetToken: {
+    type: DataTypes.STRING(300),
+    allowNull: true,
+  },
+  resetTokenExpiry: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
 });
 // models.User.belongsToMany(models.User, {
 //   through: models.UserRole,
