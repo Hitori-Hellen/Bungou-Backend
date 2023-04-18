@@ -5,12 +5,12 @@ export const dbConfig = new Sequelize(
   `${process.env.DB_USERNAME}`,
   `${process.env.DB_PASSWORD}`,
   {
-    host: "bookdbserver1.mysql.database.azure.com",
+    host: "localhost",
     dialect: "mysql",
     define: {
-      timestamps: false
+      timestamps: false,
     },
-  },
+  }
 );
 // DB_USERNAME = root;
 // DB_PASSWORD = Khai141296;

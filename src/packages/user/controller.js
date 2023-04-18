@@ -1,4 +1,5 @@
 import * as services from "./service";
+import { pick } from "lodash";
 
 import {
   interalServerError,
@@ -41,6 +42,39 @@ export const changePwd = async (req, res) => {
   try {
     const response = await services.changePwdUser(req.user.id, req.body);
 
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return interalServerError(res);
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const body = pick(req.body, ["firstName", "lastName"]);
+    const response = await services.updateOne(req.params.id, body);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return interalServerError(res);
+  }
+};
+
+export const requestResetPwd = async (req, res) => {
+  try {
+    const body = pick(req.body, ["email"]);
+    const response = await services.requestResetPwd(body);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return interalServerError(res);
+  }
+};
+
+export const resetPwd = async (req, res) => {
+  try {
+    const body = pick(req.body, ["email", "resetToken", "newPassword"]);
+    const response = await services.resetPwd(body);
     return res.status(200).json(response);
   } catch (error) {
     console.log(error);

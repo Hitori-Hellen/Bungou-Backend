@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "bungou",
-    "password": "password!123",
-    "database": "bungoudb",
-    "host": "bookdbserver1.mysql.database.azure.com",
+    "username": "root",
+    "password": "Khai141296",
+    "database": "DOAN",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
