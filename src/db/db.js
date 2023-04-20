@@ -5,7 +5,7 @@ export const dbConfig = new Sequelize(
   `${process.env.DB_USERNAME}`,
   `${process.env.DB_PASSWORD}`,
   {
-    host: "localhost",
+    host: "containers-us-west-192.railway.app",
     dialect: "mysql",
     define: {
       timestamps: false,
