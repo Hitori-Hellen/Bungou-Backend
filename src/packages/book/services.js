@@ -6,7 +6,18 @@ const { Op } = require("sequelize");
 export const getAllBook = async (query) => {
   let page = query.page;
   let limit = query.limit;
-
+  let yearRange = query.year?.split(',') || [];
+  if (yearRange.length == 1){
+    yearRange.push(yearRange[0]);
+  }
+  let priceRange = query.price?.split(',') || [];
+  if (priceRange.length == 1){
+    priceRange.push(priceRange[0]);
+  }
+  let ratingRange = query.rating?.split(',') || [];
+  if (ratingRange.length == 1){
+    ratingRange.push(ratingRange[0]);
+  }
   page = parseInt(page) || 1; // default to page 1
   limit = parseInt(limit) || 10; // default to 10 items per page
 
@@ -24,6 +35,27 @@ export const getAllBook = async (query) => {
             categories: {
               [Op.substring]: dbConfig.literal(`${query.categories}`),
             },
+          }
+        : null,
+      query.year
+        ? {
+            year: {
+              [Op.between]: [parseInt(yearRange[0]), parseInt(yearRange[1])],
+            }
+          }
+        : null,
+      query.price
+        ? {
+            price: {
+              [Op.between]: [parseFloat(priceRange[0]), parseFloat(priceRange[1])],
+            }
+          }
+        : null,
+      query.price
+        ? {
+            rating: {
+              [Op.between]: [parseFloat(ratingRange[0]), parseFloat(ratingRange[1])],
+            }
           }
         : null,
     ],
