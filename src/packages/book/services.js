@@ -1,21 +1,22 @@
 import { dbConfig } from "../../db/db";
 import * as db from "../../models/model";
+import Reviews from "../review/model";
 import Books from "./model";
 const { Op } = require("sequelize");
 
 export const getAllBook = async (query) => {
   let page = query.page;
   let limit = query.limit;
-  let yearRange = query.year?.split(',') || [];
-  if (yearRange.length == 1){
+  let yearRange = query.year?.split(",") || [];
+  if (yearRange.length == 1) {
     yearRange.push(yearRange[0]);
   }
-  let priceRange = query.price?.split(',') || [];
-  if (priceRange.length == 1){
+  let priceRange = query.price?.split(",") || [];
+  if (priceRange.length == 1) {
     priceRange.push(priceRange[0]);
   }
-  let ratingRange = query.rating?.split(',') || [];
-  if (ratingRange.length == 1){
+  let ratingRange = query.rating?.split(",") || [];
+  if (ratingRange.length == 1) {
     ratingRange.push(ratingRange[0]);
   }
   page = parseInt(page) || 1; // default to page 1
@@ -41,21 +42,27 @@ export const getAllBook = async (query) => {
         ? {
             year: {
               [Op.between]: [parseInt(yearRange[0]), parseInt(yearRange[1])],
-            }
+            },
           }
         : null,
       query.price
         ? {
             price: {
-              [Op.between]: [parseFloat(priceRange[0]), parseFloat(priceRange[1])],
-            }
+              [Op.between]: [
+                parseFloat(priceRange[0]),
+                parseFloat(priceRange[1]),
+              ],
+            },
           }
         : null,
       query.price
         ? {
             rating: {
-              [Op.between]: [parseFloat(ratingRange[0]), parseFloat(ratingRange[1])],
-            }
+              [Op.between]: [
+                parseFloat(ratingRange[0]),
+                parseFloat(ratingRange[1]),
+              ],
+            },
           }
         : null,
     ],
@@ -80,7 +87,15 @@ export const getBookById = async (id) => {
       BookId: id,
     },
   });
-  return response;
+  if (!response) {
+    return {
+      err: "sách không tồn tại",
+    };
+  }
+  return {
+    mes: "success",
+    data: response,
+  };
 };
 
 export const getBookByTitle = async (title) => {
@@ -105,9 +120,10 @@ export const searchBookByTitle = async (title) => {
   return response;
 };
 
-export const test = async () => {
-  // const response = await Books.findAll({
-  //   include: [{ model: Categories, as: "categories" }],
-  // });
-  // return response;
+export const checkExitBook = async (BookId) => {
+  const book = await Books.findByPk(BookId);
+  if (!book) {
+    return true;
+  }
+  return false;
 };

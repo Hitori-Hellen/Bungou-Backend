@@ -4,6 +4,7 @@ import User from "./model";
 import crypto from "crypto";
 import { Op } from "sequelize";
 import { sendResetTokenEmail } from "../../lib/nodemailer";
+import { reviewBook } from "../review/services";
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(8));
@@ -155,7 +156,6 @@ export const resetPwd = async (body) => {
       },
     },
   });
-  console.log(user);
 
   if (!user) {
     return { error: "resetToken không tồn tại" };
@@ -173,5 +173,15 @@ export const resetPwd = async (body) => {
   await user.update({ ...data });
 
   // Trả về thành công
+  return true;
+};
+
+export const review = async (body, bookId, user) => {
+  const data = {
+    bookId: bookId,
+    userId: user.id,
+    ...body,
+  };
+  await reviewBook(data);
   return true;
 };

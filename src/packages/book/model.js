@@ -1,6 +1,7 @@
 import { dbConfig } from "../../db/db";
+import Reviews from "../review/model";
 
-const { Model, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 const Books = dbConfig.define("Books", {
   BookId: {
@@ -56,15 +57,10 @@ const Books = dbConfig.define("Books", {
 });
 
 setTimeout(() => {
-  //
+  Books.hasMany(Reviews, {
+    foreignKey: "bookId",
+    as: "reviews",
+  });
 });
 
-// models.Book.hasMany(models.Review, {
-//   foreignKey: "ReviewId",
-// });
-// models.Book.belongsToMany(models.Book, {
-//   through: models.BookOrder,
-//   foreignKey: "BookId",
-//   otherKey: "OrderId",
-// });
 export default Books;
