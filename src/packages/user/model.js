@@ -1,4 +1,5 @@
 import { dbConfig } from "../../db/db";
+import Reviews from "../review/model";
 
 const { DataTypes } = require("sequelize");
 
@@ -38,16 +39,8 @@ const User = dbConfig.define("User", {
     allowNull: true,
   },
 });
-// models.User.belongsToMany(models.User, {
-//   through: models.UserRole,
-//   foreignKey: "UserId",
-//   otherKey: "RoleId",
-// });
-// models.User.hasMany(models.Review, {
-//   foreignKey: "ReviewId",
-// });
-// models.User.hasMany(models.Order, {
-//   foreignKey: "OrderId",
-// });
+setTimeout(() => {
+  User.hasMany(Reviews, { foreignKey: "userId", as: "reviewUser" });
+});
 
 export default User;

@@ -1,21 +1,21 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const DataTypes = require("sequelize");
-    return queryInterface.createTable("Review", {
-      ReviewId: {
+    return queryInterface.createTable("Reviews", {
+      id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
       },
-      BookId: {
+      bookId: {
         type: DataTypes.INTEGER,
         references: {
           model: "Books",
           key: "BookId",
         },
       },
-      UserId: {
+      userId: {
         type: DataTypes.INTEGER,
         references: {
           model: "Users",
@@ -37,6 +37,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Review");
+    return queryInterface.dropTable("Reviews");
   },
 };

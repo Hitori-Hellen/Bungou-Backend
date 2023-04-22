@@ -1,40 +1,44 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
+import Books from "../book/model";
+import User from "../user/model";
 
-const Review = sequelize.define('Review', {
-    ReviewId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    BookId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Book,
-            key: 'BookId'
-        }
-    },
-    UserId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: User,
-            key: 'UserId'
-        }
-    },
-    review: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    rating: {
-        type: DataTypes.DECIMAL,
-        allowNull: false
-    },
-})
-Review.belongsTo(models.Book, {foreignKey: 'BookId'});
-Review.belongsTo(models.User, {foreignKey: 'UserId'});
+const { DataTypes, Sequelize } = require("sequelize");
+const { dbConfig } = require("../../db/db");
 
-module.exports = Review;
+const Reviews = dbConfig.define("Reviews", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  bookId: {
+    type: DataTypes.INTEGER,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+  },
+  review: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  rating: {
+    type: DataTypes.DECIMAL,
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+  },
+});
+
+setTimeout(() => {
+  Reviews.belongsTo(User);
+  //   Reviews.belongsTo(Books);
+});
+
+export default Reviews;

@@ -81,3 +81,14 @@ export const resetPwd = async (req, res) => {
     return interalServerError(res);
   }
 };
+
+export const reviewBook = async (req, res) => {
+  try {
+    const body = pick(req.body, ["review", "rating", "date"]);
+    const response = await services.review(body, req.params.id, req.user);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return interalServerError(res);
+  }
+};

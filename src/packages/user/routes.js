@@ -9,4 +9,5 @@ router.put("/changePwd", authentication, ctrl.changePwd);
 router.post("/requestResetPwd", ctrl.requestResetPwd);
 router.post("/resetPwd", ctrl.resetPwd);
 router.put("/:id", ctrl.updateProfile);
+router.post("/review/book/:id", authentication, ctrl.reviewBook);
 export default router;
