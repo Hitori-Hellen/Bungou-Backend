@@ -3,6 +3,10 @@ import * as db from "../../models/model";
 import Reviews from "../review/model";
 import Books from "./model";
 const { Op } = require("sequelize");
+const azure = require('azure-storage');
+const {v4: uuidv4} = require('uuid');
+
+const blobService = azure.createBlobService(process.env.AZURE_ACCOUNT_NAME, process.env.AZURE_ACCOUNT_KEY);
 
 export const getAllBook = async (query) => {
   let page = query.page;
@@ -89,35 +93,13 @@ export const getBookById = async (id) => {
   });
   if (!response) {
     return {
-      err: "sách không tồn tại",
+      err: "Book not found",
     };
   }
   return {
     mes: "success",
     data: response,
   };
-};
-
-export const getBookByTitle = async (title) => {
-  let name = title.split("_").join(" ");
-  const response = await Books.findOne({
-    where: {
-      title: name,
-    },
-  });
-  return response;
-};
-
-export const searchBookByTitle = async (title) => {
-  const response = await Books.findAll({
-    limit: 10,
-    where: {
-      title: {
-        [Op.substring]: dbConfig.literal(title),
-      },
-    },
-  });
-  return response;
 };
 
 export const checkExitBook = async (BookId) => {
@@ -127,3 +109,54 @@ export const checkExitBook = async (BookId) => {
   }
   return false;
 };
+
+export const updateBook = async (BookId, title) => {
+  await Books.update({
+    [Op.and]: [
+      title
+      ? {
+        title: title
+      }
+      : null,
+    ],
+    where: {
+      BookId: BookId,
+    },
+  })
+}
+
+export const uploadFile = async (req, res) => {
+  const containerName = 'blob';
+  const imageFile = req.file;
+
+  const stream = require('fs').createReadStream(imageFile.path);
+  const streamLength = imageFile.size;
+  const filename = uuidv4();
+  const options = {
+    contentSettings: {
+      contentType: imageFile.mimetype // Use the mimetype from the uploaded file
+    }
+  };
+  blobService.createBlockBlobFromStream(containerName, filename, stream, streamLength, options, (error, result) => {
+    if (error) {
+      res.status(500).json({ error: 'Failed to upload image to Azure Blob Storage' });
+    } else {
+      res.status(200).json({ success: 'Image uploaded successfully' });
+    }
+  });
+  return res;
+}
+
+export const uploadBook = async (req) => {
+  const title = req.title;
+  const image = req.image;
+  const year = req.year;
+  const price = req.price;
+  const author = req.author;
+  const rating = req.rating;
+  const publisher = req.publisher;
+  const length = req.length;
+  const isbn = req.isbn;
+  const citycountry = req.citycountry;
+  const categories = req.categories;
+}

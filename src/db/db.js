@@ -5,8 +5,8 @@ export const dbConfig = new Sequelize(
   `${process.env.DB_USERNAME}`,
   `${process.env.DB_PASSWORD}`,
   {
-    host: "containers-us-west-192.railway.app",
-    port: 6637,
+    host: "localhost",
+    port: 3306,
     dialect: "mysql",
     define: {
       timestamps: false,
@@ -19,3 +19,16 @@ export const dbConfig = new Sequelize(
 // DB_HOST = localhost;
 // DB_PORT = 3306;
 // DB_ENABLE_LOGGING = false;
+// export const dbConfig = new Sequelize(
+//   `${process.env.DB_NAME}`,
+//   `${process.env.DB_USERNAME}`,
+//   `${process.env.DB_PASSWORD}`,
+//   {
+//     host: "containers-us-west-192.railway.app",
+//     port: 6637,
+//     dialect: "mysql",
+//     define: {
+//       timestamps: false,
+//     },
+//   }
+// );

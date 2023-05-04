@@ -20,16 +20,6 @@ export const getBookById = async (req, res) => {
   }
 };
 
-export const searchBookByTitle = async (req, res) => {
-  try {
-    const response = await services.searchBookByTitle(req.query.name);
-    return res.status(200).json(response);
-  } catch (error) {
-    console.log(error);
-    // return interalServerError(res);
-  }
-};
-
 export const review = async (req, res) => {
   try {
     const response = await services.review(req.params.id);
@@ -39,3 +29,12 @@ export const review = async (req, res) => {
     return interalServerError(res);
   }
 };
+
+export const upload = async (req, res) => {
+  try{
+    const response = await services.uploadFile(req, res);
+    return res.status(200).json(response);
+  }catch(error){
+    console.log(error);
+  }
+}
