@@ -6,6 +6,8 @@ const upload = multer({ dest: 'upload/' });
 
 router.get("/", ctrl.getAllBook);
 router.get("/:id", ctrl.getBookById);
+router.get("/:isbn", ctrl.getBookByIsbn);
 router.get("/review/:id", ctrl.review);
 router.post("/upload", upload.single('upload'), ctrl.upload);
+router.put("/update", ctrl.updateBook);
 export default router;

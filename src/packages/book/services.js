@@ -41,7 +41,7 @@ export const getAllBook = async (query) => {
               [Op.substring]: dbConfig.literal(`${query.categories}`),
             },
           }
-        : null,
+    : null,
       query.year
         ? {
             year: {
@@ -102,6 +102,23 @@ export const getBookById = async (id) => {
   };
 };
 
+export const getBookByIsbn = async (isbn) => {
+  const response = await Books.findOne({
+    where: {
+      isbn: isbn,
+    }
+  });
+  if (!response) {
+    return {
+      err: "Book not found",
+    };
+  }
+  return {
+    mes: "success",
+    data: response,
+  };
+};
+
 export const checkExitBook = async (BookId) => {
   const book = await Books.findByPk(BookId);
   if (!book) {
@@ -147,7 +164,7 @@ export const uploadFile = async (req, res) => {
   return res;
 }
 
-export const uploadBook = async (req) => {
+export const updateBook = async (req) => {
   const title = req.title;
   const image = req.image;
   const year = req.year;
@@ -159,4 +176,30 @@ export const uploadBook = async (req) => {
   const isbn = req.isbn;
   const citycountry = req.citycountry;
   const categories = req.categories;
+
+  await Book.update(
+    {
+      title: title,
+      image: image,
+      year: year,
+      price: price,
+      author: author,
+      rating: rating,
+      publisher: publisher,
+      length: length,
+      isbn: isbn,
+      citycountry: citycountry,
+      categories: categories
+    },
+    {
+      where {
+      title: title
+    }
+  })
+
+  return true;
+}
+
+export const uploadBook = await () => {
+
 }

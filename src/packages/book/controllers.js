@@ -20,6 +20,15 @@ export const getBookById = async (req, res) => {
   }
 };
 
+export const getBookByIsbn = async (req, res) => {
+  try {
+    const response = await services.getBookByIsbn(req.params.isbn);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const review = async (req, res) => {
   try {
     const response = await services.review(req.params.id);
@@ -33,6 +42,15 @@ export const review = async (req, res) => {
 export const upload = async (req, res) => {
   try{
     const response = await services.uploadFile(req, res);
+    return res.status(200).json(response);
+  }catch(error){
+    console.log(error);
+  }
+}
+
+export const updateBook  = async (req, res) => {
+  try {
+    const response = await services.updateBook(req);
     return res.status(200).json(response);
   }catch(error){
     console.log(error);
