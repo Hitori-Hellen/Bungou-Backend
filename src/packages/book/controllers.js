@@ -50,7 +50,7 @@ export const upload = async (req, res) => {
 
 export const updateBook  = async (req, res) => {
   try {
-    const response = await services.updateBook(req);
+    const response = await services.updateBook(req.body);
     return res.status(200).json(response);
   }catch(error){
     console.log(error);

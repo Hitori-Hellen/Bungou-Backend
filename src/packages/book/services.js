@@ -158,48 +158,12 @@ export const uploadFile = async (req, res) => {
     if (error) {
       res.status(500).json({ error: 'Failed to upload image to Azure Blob Storage' });
     } else {
-      res.status(200).json({ success: 'Image uploaded successfully' });
+      res.status(200).json({ success: 'File uploaded successfully' });
     }
   });
   return res;
 }
 
-export const updateBook = async (req) => {
-  const title = req.title;
-  const image = req.image;
-  const year = req.year;
-  const price = req.price;
-  const author = req.author;
-  const rating = req.rating;
-  const publisher = req.publisher;
-  const length = req.length;
-  const isbn = req.isbn;
-  const citycountry = req.citycountry;
-  const categories = req.categories;
-
-  await Book.update(
-    {
-      title: title,
-      image: image,
-      year: year,
-      price: price,
-      author: author,
-      rating: rating,
-      publisher: publisher,
-      length: length,
-      isbn: isbn,
-      citycountry: citycountry,
-      categories: categories
-    },
-    {
-      where {
-      title: title
-    }
-  })
-
-  return true;
-}
-
-export const uploadBook = await () => {
-
+export const uploadBook = async (req) => {
+  
 }

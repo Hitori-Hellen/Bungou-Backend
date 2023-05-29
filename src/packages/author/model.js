@@ -1,6 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
+import { dbConfig } from "../../db/db";
 
-module.exports = (sequelize, DataTypes) => sequelize.define('Buyer', {
+const { DataTypes } = require("sequelize");
+
+const Author = dbConfig.define('Buyer', {
     AuthorId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -28,3 +30,5 @@ module.exports = (sequelize, DataTypes) => sequelize.define('Buyer', {
         allowNull: true
     },
 })
+
+export default Auhtor;
