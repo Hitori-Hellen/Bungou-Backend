@@ -158,12 +158,29 @@ export const uploadFile = async (req, res) => {
     if (error) {
       res.status(500).json({ error: 'Failed to upload image to Azure Blob Storage' });
     } else {
-      res.status(200).json({ success: 'File uploaded successfully' });
+      res.status(200).json({ path: 'https://blobimagebungou.blob.core.windows.net/blob/' + filename });
     }
   });
   return res;
 }
 
-export const uploadBook = async (req) => {
-  
+export const uploadBook = async ({title, year, price, author, publisher, length, isbn, citycountry, categories}) => {
+  console.log(title);
+  const response = await Books.findOrCreate({
+    where: { title },
+    defaults: {
+      title: title,
+      image: "null",
+      year: year,
+      price: price,
+      author: author,
+      rating: 0,
+      publisher: publisher,
+      length: length,
+      isbn: isbn,
+      citycountry: citycountry,
+      categories: categories,  
+    },
+  });
+  return response;
 }

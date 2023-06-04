@@ -10,4 +10,5 @@ router.get("/:isbn", ctrl.getBookByIsbn);
 router.get("/review/:id", ctrl.review);
 router.post("/upload", upload.single('upload'), ctrl.upload);
 router.put("/update", ctrl.updateBook);
+router.post("/uploadBook", ctrl.uploadBook);
 export default router;
