@@ -38,6 +38,10 @@ const User = dbConfig.define("User", {
     type: DataTypes.DATE,
     allowNull: true,
   },
+  role:{
+    type: DataTypes.ENUM("user","author"),
+    defaultValue: "user",
+  }
 });
 setTimeout(() => {
   User.hasMany(Reviews, { foreignKey: "userId", as: "reviewUser" });
