@@ -8,13 +8,15 @@ import { reviewBook } from "../review/services";
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-export const register = async ({ email, password, firstName, lastName }) => {
+export const register = async ({ email, password, firstName, lastName,role }) => {
+  console.log(email, password, firstName, lastName)
   const response = await User.findOrCreate({
     where: { email },
     defaults: {
       firstName,
       lastName,
       email,
+      role,
       password: hashPassword(password),
     },
   });
@@ -58,7 +60,7 @@ export const login = async ({ email, password }) => {
         {
           id: response.id,
           email: response.email,
-          role_code: response.role_code,
+          role: response.role,
         },
         process.env.JWT_SECRET,
         { expiresIn: "5d" }

@@ -34,6 +34,11 @@ module.exports = {
         type: DataTypes.DECIMAL,
         allowNull: false,
       },
+      createdAt:{
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      }
     });
   },
   down: (queryInterface, Sequelize) => {
