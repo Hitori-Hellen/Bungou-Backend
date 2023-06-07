@@ -5,8 +5,8 @@ export const dbConfig = new Sequelize(
   `${process.env.DB_USERNAME}`,
   `${process.env.DB_PASSWORD}`,
   {
-    host: "containers-us-west-192.railway.app",
-    port: 6637,
+    host: "containers-us-west-128.railway.app",
+    port: 6604,
     dialect: "mysql",
     define: {
       timestamps: false,
