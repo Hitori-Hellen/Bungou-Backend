@@ -26,6 +26,7 @@ export const register = async ({ email, password, firstName, lastName,role }) =>
         {
           id: response[0].id,
           email: response[0].email,
+          role: response[0].role,
         },
         process.env.JWT_SECRET,
         { expiresIn: "5d" }
