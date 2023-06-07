@@ -1,6 +1,11 @@
-const { Model, DataTypes } = reuqire('sequelize')
+import { dbConfig } from "../../db/db";
 
-const Order = sequelize.define('Order', {
+import Payments from "../payment_details/model";
+import OrderItem from "../order_items/model";
+import User from "../user/model";
+import { DataTypes } from "sequelize";
+
+const Order = dbConfig.define('Order', {
     OrderId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -14,6 +19,10 @@ const Order = sequelize.define('Order', {
             key: 'UserId'
         }
     },
+    amount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     createAt: {
         type: DataTypes.DATE,
         allowNull: false
@@ -22,11 +31,20 @@ const Order = sequelize.define('Order', {
         type: DataTypes.BOOLEAN,
     },
 })
-models.Order.belongsToMany(models.Order, {
-    through: models.BookOrder,
-    foreignKey: 'OrderId',
-    otherKey: 'BookId',
-})
-models.Order.belongsTo(models.User, {foreignKey: 'UserId'});
 
-module.exports = Order;
+setTimeout(() => {
+  Order.hasOne(Payments, {
+    foreignKey: "PaymentId",
+    as: "Payments",
+  });
+  Order.hasMany(OrderItem, {
+    foreignKey: "id",
+    as: "OrderItem",
+  });
+  Order.hasOne(User, {
+    foreignKey: "UserId",
+    as: "User",
+  })
+})
+
+export default Order;

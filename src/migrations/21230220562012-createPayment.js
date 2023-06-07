@@ -10,9 +10,13 @@ module.exports = {
   },
   order_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    references: {
+            model: "Order",
+            key: "OrderId"
+    }
+
   },
-  amount: {
+  total: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

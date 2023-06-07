@@ -1,5 +1,6 @@
 import { dbConfig } from "../../db/db";
 import Reviews from "../review/model";
+import OrderItem from "../order_items/model";
 
 const { DataTypes } = require("sequelize");
 
@@ -61,6 +62,10 @@ setTimeout(() => {
     foreignKey: "bookId",
     as: "reviews",
   });
+  Books.hasOne(OrderItem, {
+    foreignKey: "id",
+    as: "orderitem",
+  })
 });
 
 export default Books;

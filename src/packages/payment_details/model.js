@@ -13,9 +13,13 @@ const Payments = dbConfig.define("Payments", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  amount: {
+  total: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  discount: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
   created_at: {
     type: "TIMESTAMP",
@@ -28,5 +32,7 @@ const Payments = dbConfig.define("Payments", {
     allowNull: false,
   },
 })
+
+
 
 export default Payments;

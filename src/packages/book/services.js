@@ -165,7 +165,6 @@ export const uploadFile = async (req, res) => {
 }
 
 export const uploadBook = async ({title, year, price, author, publisher, length, isbn, citycountry, categories}) => {
-  console.log(title);
   const response = await Books.findOrCreate({
     where: { title },
     defaults: {
@@ -183,4 +182,12 @@ export const uploadBook = async ({title, year, price, author, publisher, length,
     },
   });
   return response;
+}
+
+export const deleteBook = async(BookId) => {
+  await Books.destroy({
+    where: {
+      BookId
+    }
+  })
 }

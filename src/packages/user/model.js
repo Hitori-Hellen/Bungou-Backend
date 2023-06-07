@@ -1,4 +1,5 @@
 import { dbConfig } from "../../db/db";
+import Order from "../order/model";
 import Reviews from "../review/model";
 
 const { DataTypes } = require("sequelize");

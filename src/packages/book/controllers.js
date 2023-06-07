@@ -50,7 +50,7 @@ export const upload = async (req, res) => {
 
 export const uploadBook  = async (req, res) => {
   try {
-    const response = await services.uploadBook(req.body);
+    const response = await services.uploadBook(req.query);
     return res.status(200).json(response);
   }catch(error){
     console.log(error);
@@ -60,6 +60,15 @@ export const uploadBook  = async (req, res) => {
 export const updateBook  = async (req, res) => {
   try {
     const response = await services.updateBook(req.body);
+    return res.status(200).json(response);
+  }catch(error){
+    console.log(error);
+  }
+}
+
+export const deleteBook = async (req, res) => {
+  try {
+    const response = await services.deleteBook(req.params.id);
     return res.status(200).json(response);
   }catch(error){
     console.log(error);
