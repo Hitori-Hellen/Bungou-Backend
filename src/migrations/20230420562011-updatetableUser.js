@@ -2,15 +2,15 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { DataTypes } = Sequelize;
     return Promise.all([
-      await queryInterface.addColumn("Reviews", "createdAt", {
-        type: DataTypes.DATE,
+      await queryInterface.addColumn("Users", "role", {
+        type: DataTypes.ENUM("user","author"),
+        defaultValue: "user",
         allowNull: false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       }),
     ]);
   },
   down: async (queryInterface, Sequelize) => {
     const { DataTypes } = Sequelize;
-    return Promise.all([await queryInterface.remove("Reviews", "createdAt")]);
+    return Promise.all([await queryInterface.remove("Reviews", "role")]);
   },
 };

@@ -5,3 +5,8 @@ export const getAllPayments = async (query) => {
   const response = await Payments.findAll();
   return response;
 }
+
+
+export const exportPaymentInfo = async (query) => {
+  
+}

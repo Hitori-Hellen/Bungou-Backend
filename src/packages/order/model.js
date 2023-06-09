@@ -3,7 +3,7 @@ import { dbConfig } from "../../db/db";
 import Payments from "../payment_details/model";
 import OrderItem from "../order_items/model";
 import User from "../user/model";
-import { DataTypes } from "sequelize";
+import { DataTypes, Sequelize } from "sequelize";
 
 const Order = dbConfig.define('Order', {
     OrderId: {
@@ -23,13 +23,16 @@ const Order = dbConfig.define('Order', {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    createAt: {
-        type: DataTypes.DATE,
-        allowNull: false
+    created_at: {
+      type: "TIMESTAMP",
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
     },
-    state: {
-        type: DataTypes.BOOLEAN,
-    },
+    updated_at: {
+      type: "TIMESTAMP",
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
+    },  
 })
 
 setTimeout(() => {

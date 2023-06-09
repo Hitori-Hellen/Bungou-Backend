@@ -1,0 +1,66 @@
+import { verify, TokenExpiredError } from "jsonwebtoken";
+import Admins from "../packages/admin/model";
+
+/* eslint-disable no-unused-vars */
+
+// eslint-disable-next-line consistent-return
+export const authenticationAdmin = async (req, res, next) => {
+  const fullPrefixToken = req.headers.authorization;
+  if (fullPrefixToken) {
+    const token = fullPrefixToken.split(" ")[1];
+    // eslint-disable-next-line consistent-return
+    verify(`${token}`, process.env.JWT_SECRET, async (error, decoded) => {
+      try {
+        if (error) {
+          const isChecked = error instanceof TokenExpiredError;
+
+          if (!isChecked) {
+            return res.status(401).json({
+              mes: "token lỗi",
+            });
+          }
+
+          if (isChecked) {
+            return res.status(401).json({
+              mes: "token hết hạn",
+            });
+          }
+        }
+
+        if (typeof decoded === "string") {
+          // eslint-disable-next-line no-param-reassign
+          decoded = JSON.parse(decodeURIComponent(decoded));
+        }
+
+        if (typeof decoded === "undefined") {
+          return res.status(401).json({
+            mes: "token lỗi",
+          });
+        }
+
+        // Cache User
+        const admin = await Admins.findByPk(decoded.id, {
+          attributes: {
+            exclude: ["password", "accessToken"],
+          },
+        });
+        if (!admin) {
+          return res.status(400).json({
+            mes: "Bạn không có quyền truy cập ",
+          });
+        }
+        req.user = admin.toJSON();
+
+        next();
+      } catch (errors) {
+        return res.status(401).json({
+          mes: "token lỗi",
+        });
+      }
+    });
+  } else {
+    return res.status(401).json({
+      mes: "token lỗi",
+    });
+  }
+};

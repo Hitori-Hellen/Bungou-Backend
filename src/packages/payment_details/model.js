@@ -17,10 +17,6 @@ const Payments = dbConfig.define("Payments", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  discount: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
   created_at: {
     type: "TIMESTAMP",
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

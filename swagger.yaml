@@ -57,23 +57,6 @@ paths:
                 $ref: '#/components/schemas/BookApiResponse'
         '405':
           description: Invalid input
-      # security:
-      #   - petstore_auth:
-      #       - 'write:pets'
-      #       - 'read:pets'
-      # requestBody:
-      #   description: Create a new pet in the store
-      #   required: true
-      #   content:
-      #     application/json:
-      #       schema:
-      #         $ref: '#/components/schemas/Book'
-      #     application/xml:
-      #       schema:
-      #         $ref: '#/components/schemas/Book'
-      #     application/x-www-form-urlencoded:
-      #       schema:
-      #         $ref: '#/components/schemas/Book'
     put:
       tags:
         - pet
@@ -100,19 +83,6 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
-      # requestBody:
-      #   description: Update an existent pet in the store
-      #   required: true
-      #   content:
-      #     application/json:
-      #       schema:
-      #         $ref: '#/components/schemas/Pet'
-      #     application/xml:
-      #       schema:
-      #         $ref: '#/components/schemas/Pet'
-      #     application/x-www-form-urlencoded:
-      #       schema:
-      #         $ref: '#/components/schemas/Pet'
   /pet/findByStatus:
     get:
       tags:
