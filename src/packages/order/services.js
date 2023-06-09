@@ -35,8 +35,8 @@ export const createPaymentUrl = async (req, res) => {
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
 
-  let tmnCode = "D8HO3G9B";
-  let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE";
+  let tmnCode = "L1RGRE63";
+  let secretKey = "AGUZPIKLIWVUSQYFOKPCYWLNKLCWTDIT";
   let vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
   let returnUrl = "http://localhost:3000/";
   let orderId = moment(date).format("DDHHmmss");
