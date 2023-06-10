@@ -38,7 +38,7 @@ export const createPaymentUrl = async (req, res) => {
   let tmnCode = "L1RGRE63";
   let secretKey = "AGUZPIKLIWVUSQYFOKPCYWLNKLCWTDIT";
   let vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-  let returnUrl = "http://localhost:3000/";
+  let returnUrl = "https://rotten-milk-production.up.railway.app/api/v1/order/getvnpayipn";
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
   let bankCode = "VNBANK";
@@ -90,7 +90,6 @@ export const getVnpayIpn = async (req, res) => {
   delete vnp_Params["vnp_SecureHashType"];
 
   vnp_Params = sortObject(vnp_Params);
-  let config = require("config");
   let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE";
   let querystring = require("qs");
   let signData = querystring.stringify(vnp_Params, { encode: false });
