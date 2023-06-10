@@ -8,8 +8,14 @@ import { reviewBook } from "../review/services";
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-export const register = async ({ email, password, firstName, lastName,role }) => {
-  console.log(email, password, firstName, lastName)
+export const register = async ({
+  email,
+  password,
+  firstName,
+  lastName,
+  role,
+}) => {
+  console.log(email, password, firstName, lastName);
   const response = await User.findOrCreate({
     where: { email },
     defaults: {

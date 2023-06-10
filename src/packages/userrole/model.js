@@ -6,7 +6,7 @@ const UserRole = sequelize.define("UserRole", {
     type: DataTypes.INTEGER,
     references: {
       model: User,
-      key: "UserId",
+      key: "id",
     },
   },
   RoleId: {
@@ -17,7 +17,7 @@ const UserRole = sequelize.define("UserRole", {
     },
   },
 });
-UserRole.belongsTo(models.User, { foreignKey: "UserId" });
+UserRole.belongsTo(models.User, { foreignKey: "id" });
 UserRole.belongsTo(models.Role, { foreignKey: "RoleId" });
 
 module.exports = UserRole;
