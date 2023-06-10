@@ -1,21 +1,21 @@
 import Order from "../order/model.js";
 import OrderItem from "../order_items/model.js";
-const moment = require('moment');
+const moment = require("moment");
 
 function sortObject(obj) {
-	let sorted = {};
-	let str = [];
-	let key;
-	for (key in obj){
-		if (obj.hasOwnProperty(key)) {
-		str.push(encodeURIComponent(key));
-		}
-	}
-	str.sort();
-    for (key = 0; key < str.length; key++) {
-        sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
+  let sorted = {};
+  let str = [];
+  let key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      str.push(encodeURIComponent(key));
     }
-    return sorted;
+  }
+  str.sort();
+  for (key = 0; key < str.length; key++) {
+    sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
+  }
+  return sorted;
 }
 
 export const getAllOrder = async () => {
@@ -41,9 +41,9 @@ export const createPaymentUrl = async (req, res) => {
   let returnUrl = "http://localhost:3000/";
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
-  let bankCode = req.body.bankCode;
+  let bankCode = "VNBANK";
 
-  let locale = req.body.language;
+  let locale = "vn";
   if (locale === null || locale === "") {
     locale = "vn";
   }
@@ -77,6 +77,86 @@ export const createPaymentUrl = async (req, res) => {
 
   // res.redirect(vnpUrl);
   return vnpUrl;
+};
+
+export const getVnpayIpn = async (req, res) => {
+  let vnp_Params = req.query;
+  let secureHash = vnp_Params["vnp_SecureHash"];
+
+  let orderId = vnp_Params["vnp_TxnRef"];
+  let rspCode = vnp_Params["vnp_ResponseCode"];
+
+  delete vnp_Params["vnp_SecureHash"];
+  delete vnp_Params["vnp_SecureHashType"];
+
+  vnp_Params = sortObject(vnp_Params);
+  let config = require("config");
+  let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE";
+  let querystring = require("qs");
+  let signData = querystring.stringify(vnp_Params, { encode: false });
+  let crypto = require("crypto");
+  let hmac = crypto.createHmac("sha512", secretKey);
+  let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
+
+  let paymentStatus = "0";
+
+  let checkOrderId = true;
+  let checkAmount = true;
+  if (secureHash === signed) {
+    //kiểm tra checksum
+    if (checkOrderId) {
+      if (checkAmount) {
+        if (paymentStatus == "0") {
+          if (rspCode == "00") {
+            res.status(200).json({ RspCode: "00", Message: "Success" });
+          } else {
+            res.status(200).json({ RspCode: "00", Message: "Success" });
+            ngle;
+          }
+        } else {
+          res.status(200).json({
+            RspCode: "02",
+            Message: "This order has been updated to the payment status",
+          });
+        }
+      } else {
+        res.status(200).json({ RspCode: "04", Message: "Amount invalid" });
+      }
+    } else {
+      res.status(200).json({ RspCode: "01", Message: "Order not found" });
+    }
+  } else {
+    res.status(200).json({ RspCode: "97", Message: "Checksum failed" });
+  }
+  return res;
+};
+
+export const returnVnpay = async (req, res) => {
+  let vnp_Params = req.query;
+
+  let secureHash = vnp_Params["vnp_SecureHash"];
+
+  delete vnp_Params["vnp_SecureHash"];
+  delete vnp_Params["vnp_SecureHashType"];
+
+  vnp_Params = sortObject(vnp_Params);
+
+  let config = require("config");
+  let tmnCode = "D8HO3G9B"
+  let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE"
+
+  let querystring = require("qs");
+  let signData = querystring.stringify(vnp_Params, { encode: false });
+  let crypto = require("crypto");
+  let hmac = crypto.createHmac("sha512", secretKey);
+  let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
+
+  if (secureHash === signed) {
+    res.render("success", { code: vnp_Params["vnp_ResponseCode"] });
+  } else {
+    res.render("success", { code: "97" });
+  }
+  return res;
 };
 
 export const addItemToOrder = (UserId, BookId) => {};
