@@ -90,7 +90,7 @@ export const getVnpayIpn = async (req, res) => {
   delete vnp_Params["vnp_SecureHashType"];
 
   vnp_Params = sortObject(vnp_Params);
-  let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE";
+  let secretKey = "AGUZPIKLIWVUSQYFOKPCYWLNKLCWTDIT";
   let querystring = require("qs");
   let signData = querystring.stringify(vnp_Params, { encode: false });
   let crypto = require("crypto");
@@ -139,8 +139,8 @@ export const returnVnpay = async (req, res) => {
   delete vnp_Params["vnp_SecureHashType"];
 
   vnp_Params = sortObject(vnp_Params);
-  let tmnCode = "D8HO3G9B"
-  let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE"
+  let tmnCode = "L1RGRE63"
+  let secretKey = "AGUZPIKLIWVUSQYFOKPCYWLNKLCWTDIT"
 
   let querystring = require("qs");
   let signData = querystring.stringify(vnp_Params, { encode: false });
