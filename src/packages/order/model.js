@@ -16,7 +16,7 @@ const Order = dbConfig.define('Order', {
         type: DataTypes.INTEGER,
         references: {
             model: User,
-            key: 'UserId'
+            key: 'id'
         }
     },
     amount: {
@@ -45,7 +45,7 @@ setTimeout(() => {
     as: "OrderItem",
   });
   Order.hasOne(User, {
-    foreignKey: "UserId",
+    foreignKey: "id",
     as: "User",
   })
 })
