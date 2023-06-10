@@ -139,8 +139,6 @@ export const returnVnpay = async (req, res) => {
   delete vnp_Params["vnp_SecureHashType"];
 
   vnp_Params = sortObject(vnp_Params);
-
-  let config = require("config");
   let tmnCode = "D8HO3G9B"
   let secretKey = "DAYQTEGKJOTZTPIUSURHSCYQFXVIUIWE"
 
