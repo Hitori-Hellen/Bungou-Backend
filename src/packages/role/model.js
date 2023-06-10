@@ -1,20 +1,21 @@
-const { Model, sequelize } = require('sequelize');
+const { Model, sequelize } = require("sequelize");
 
-module.exports = (sequelize, DataTypes) => {sequelize.define('Role', {
+module.exports = (sequelize, DataTypes) => {
+  sequelize.define("Role", {
     RoleId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
     },
     RoleName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    }
-});
-models.Role.belongsToMany(models.Role, {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
+  models.Role.belongsToMany(models.Role, {
     through: models.UserRole,
-    foreignKey: 'RoleId',
-    otherKey: 'UserId'
-})
+    foreignKey: "RoleId",
+    otherKey: "id",
+  });
 };

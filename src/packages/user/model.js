@@ -66,7 +66,7 @@ const User = dbConfig.define("User", {
   },
 });
 setTimeout(() => {
-  User.hasMany(Reviews, { foreignKey: "userId", as: "reviewUser" });
+  User.hasMany(Reviews, { foreignKey: "id", as: "reviewUser" });
 });
 
 export default User;
