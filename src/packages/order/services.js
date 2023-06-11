@@ -149,7 +149,7 @@ export const returnVnpay = async (req, res) => {
   let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
 
   if (secureHash === signed) {
-    const data = { "UserId": req.params.userId, "BookId": req.params.bookId, "amount": req.query.vnp_Amount}
+    const data = { "UserId": req.params.userId, "BookId": req.params.bookId, "amount": req.query.vnp_Amount/100}
     await Order.create(data);
     res.status(200).json({ code: vnp_Params["vnp_ResponseCode"] });
   } else {
