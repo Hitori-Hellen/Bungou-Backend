@@ -65,7 +65,7 @@ export const getAllBook = async (query) => {
             },
           }
         : null,
-      query.price
+      query.rating
         ? {
             rating: {
               [Op.between]: [

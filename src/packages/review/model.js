@@ -23,6 +23,7 @@ const Reviews = dbConfig.define("Reviews", {
   },
   date: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     allowNull: false,
   },
   rating: {

@@ -23,7 +23,7 @@ export const getAllOrder = async () => {
   return response;
 };
 
-export const createPaymentUrl = async (req, res) => {
+export const createPaymentUrl = async (req, res) => { 
   process.env.TZ = "Asia/Ho_Chi_Minh";
 
   let date = new Date();
@@ -38,7 +38,7 @@ export const createPaymentUrl = async (req, res) => {
   let tmnCode = "L1RGRE63";
   let secretKey = "AGUZPIKLIWVUSQYFOKPCYWLNKLCWTDIT";
   let vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-  let returnUrl = "https://rotten-milk-production.up.railway.app/api/v1/order/";
+  let returnUrl = `https://rotten-milk-production.up.railway.app/api/v1/order/returnvnpay/${req.body.userId}/${req.body.bookId}/`;
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
   let bankCode = "VNBANK";
@@ -149,6 +149,8 @@ export const returnVnpay = async (req, res) => {
   let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
 
   if (secureHash === signed) {
+    const data = { "UserId": req.params.userId, "BookId": req.params.bookId, "amount": req.query.vnp_Amount}
+    await Order.create(data);
     res.status(200).json({ code: vnp_Params["vnp_ResponseCode"] });
   } else {
     res.status(200).json({ code: "97" });
