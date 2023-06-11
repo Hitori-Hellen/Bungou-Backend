@@ -50,7 +50,7 @@ setTimeout(() => {
   });
 
   Order.belongsTo(User, {
-    foreignKey: "id",
+    foreignKey: "UserId",
     as: "User",
   });
   Order.belongsTo(Books, {

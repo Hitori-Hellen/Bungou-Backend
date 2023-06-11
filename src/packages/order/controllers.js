@@ -29,3 +29,13 @@ export const returnVnpay = async (req, res) => {
     // return interalServerError(res);
   }
 }
+
+export const getOrderById = async (req, res) => {
+  try {
+    const response = await services.getOrderById(req.params.id);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    // return interalServerError(res);
+  }
+}

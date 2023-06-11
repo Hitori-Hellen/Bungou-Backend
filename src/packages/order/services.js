@@ -1,5 +1,7 @@
+import Books from "../book/model.js";
 import Order from "../order/model.js";
 import OrderItem from "../order_items/model.js";
+import User from "../user/model.js";
 const moment = require("moment");
 
 function sortObject(obj) {
@@ -20,6 +22,24 @@ function sortObject(obj) {
 
 export const getAllOrder = async () => {
   const response = await Order.findAll();
+  return response;
+};
+
+export const getOrderById = async (userId) => {
+  const response = await Order.findAll({
+    where: {UserId: userId}
+  ,
+  include: [
+    {
+      model: User,
+      as: 'User'
+    },
+    {
+      model: Books,
+      as: 'Books'
+    }
+  ]
+});
   return response;
 };
 
