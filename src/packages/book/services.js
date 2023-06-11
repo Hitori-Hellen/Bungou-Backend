@@ -3,10 +3,13 @@ import * as db from "../../models/model";
 import Reviews from "../review/model";
 import Books from "./model";
 const { Op } = require("sequelize");
-const azure = require('azure-storage');
-const {v4: uuidv4} = require('uuid');
+const azure = require("azure-storage");
+const { v4: uuidv4 } = require("uuid");
 
-const blobService = azure.createBlobService(process.env.AZURE_ACCOUNT_NAME, process.env.AZURE_ACCOUNT_KEY);
+const blobService = azure.createBlobService(
+  process.env.AZURE_ACCOUNT_NAME,
+  process.env.AZURE_ACCOUNT_KEY
+);
 
 export const getAllBook = async (query) => {
   let page = query.page;
@@ -38,10 +41,13 @@ export const getAllBook = async (query) => {
       query.categories
         ? {
             categories: {
-              [Op.substring]: dbConfig.literal(`${query.categories}`),
+              // [Op.substring]: dbConfig.literal(`${query.categories}`),
+              [Op.or]: query.categories.map((category) => ({
+                [Op.substring]: dbConfig.literal(`${category}`),
+              })),
             },
           }
-    : null,
+        : null,
       query.year
         ? {
             year: {
@@ -106,7 +112,7 @@ export const getBookByIsbn = async (isbn) => {
   const response = await Books.findOne({
     where: {
       isbn: isbn,
-    }
+    },
   });
   if (!response) {
     return {
@@ -131,19 +137,19 @@ export const updateBook = async (BookId, title) => {
   await Books.update({
     [Op.and]: [
       title
-      ? {
-        title: title
-      }
-      : null,
+        ? {
+            title: title,
+          }
+        : null,
     ],
     where: {
       BookId: BookId,
     },
-  })
-}
+  });
+};
 
 export const uploadFile = async (req, res) => {
-  const containerName = 'blob';
+  const containerName = "blob";
   const imageFile = req.file;
   
   const stream = require('fs').createReadStream(imageFile.path);
@@ -151,8 +157,8 @@ export const uploadFile = async (req, res) => {
   const filename = uuidv4();
   const options = {
     contentSettings: {
-      contentType: imageFile.mimetype // Use the mimetype from the uploaded file
-    }
+      contentType: imageFile.mimetype, // Use the mimetype from the uploaded file
+    },
   };
   blobService.createBlockBlobFromStream(containerName, filename, stream, streamLength, options, (error, result) => {
     if (error) {
@@ -165,7 +171,17 @@ export const uploadFile = async (req, res) => {
   return imgPath;
 }
 
-export const uploadBook = async ({title, year, price, author, publisher, length, isbn, citycountry, categories}) => {
+export const uploadBook = async ({
+  title,
+  year,
+  price,
+  author,
+  publisher,
+  length,
+  isbn,
+  citycountry,
+  categories,
+}) => {
   const response = await Books.findOrCreate({
     where: { title },
     defaults: {
@@ -179,11 +195,11 @@ export const uploadBook = async ({title, year, price, author, publisher, length,
       length: length,
       isbn: isbn,
       citycountry: citycountry,
-      categories: categories,  
+      categories: categories,
     },
   });
   return response;
-}
+};
 
 export const addImageurlToDb = async (id, url) => {
   const response = await Books.update({ image: url}, {
@@ -195,7 +211,7 @@ export const addImageurlToDb = async (id, url) => {
 export const deleteBook = async(BookId) => {
   await Books.destroy({
     where: {
-      BookId
-    }
-  })
-}
+      BookId,
+    },
+  });
+};
