@@ -145,7 +145,7 @@ export const updateBook = async (BookId, title) => {
 export const uploadFile = async (req, res) => {
   const containerName = 'blob';
   const imageFile = req.file;
-
+  
   const stream = require('fs').createReadStream(imageFile.path);
   const streamLength = imageFile.size;
   const filename = uuidv4();
@@ -156,12 +156,13 @@ export const uploadFile = async (req, res) => {
   };
   blobService.createBlockBlobFromStream(containerName, filename, stream, streamLength, options, (error, result) => {
     if (error) {
-      res.status(500).json({ error: 'Failed to upload image to Azure Blob Storage' });
+      return res.status(500).json({ error: 'Failed to upload image to Azure Blob Storage' });
     } else {
-      res.status(200).json({ path: 'https://blobimagebungou.blob.core.windows.net/blob/' + filename });
+      imgPath = 'https://blobimagebungou.blob.core.windows.net/blob/' + filename;
     }
   });
-  return res;
+  let imgPath = 'https://blobimagebungou.blob.core.windows.net/blob/' + filename;
+  return imgPath;
 }
 
 export const uploadBook = async ({title, year, price, author, publisher, length, isbn, citycountry, categories}) => {
@@ -182,6 +183,13 @@ export const uploadBook = async ({title, year, price, author, publisher, length,
     },
   });
   return response;
+}
+
+export const addImageurlToDb = async (id, url) => {
+  const response = await Books.update({ image: url}, {
+    where: { BookId: id }
+  });
+  return response
 }
 
 export const deleteBook = async(BookId) => {

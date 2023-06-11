@@ -38,7 +38,7 @@ export const createPaymentUrl = async (req, res) => {
   let tmnCode = "L1RGRE63";
   let secretKey = "AGUZPIKLIWVUSQYFOKPCYWLNKLCWTDIT";
   let vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-  let returnUrl = "https://rotten-milk-production.up.railway.app/api/v1/order/returnvnpay";
+  let returnUrl = "https://rotten-milk-production.up.railway.app/api/v1/order/";
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
   let bankCode = "VNBANK";
@@ -155,5 +155,3 @@ export const returnVnpay = async (req, res) => {
   }
   return res
 };
-
-export const addItemToOrder = (UserId, BookId) => {};
