@@ -11,5 +11,6 @@ router.get("/review/:id", ctrl.review);
 router.post("/upload", upload.single('upload'), ctrl.upload);
 router.put("/update", ctrl.updateBook);
 router.post("/uploadBook", ctrl.uploadBook);
+router.put("/addImage", ctrl.addImageurlToDb);
 router.delete("/:id", ctrl.deleteBook);
 export default router;

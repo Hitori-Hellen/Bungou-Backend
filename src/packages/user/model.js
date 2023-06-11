@@ -59,7 +59,6 @@ const User = dbConfig.define("User", {
     type: DataTypes.STRING(300),
     allowNull: true,
   },
-
   isBlock: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,

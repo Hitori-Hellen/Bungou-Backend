@@ -65,7 +65,7 @@ export const getAllBook = async (query) => {
             },
           }
         : null,
-      query.price
+      query.rating
         ? {
             rating: {
               [Op.between]: [
@@ -151,8 +151,8 @@ export const updateBook = async (BookId, title) => {
 export const uploadFile = async (req, res) => {
   const containerName = "blob";
   const imageFile = req.file;
-
-  const stream = require("fs").createReadStream(imageFile.path);
+  
+  const stream = require('fs').createReadStream(imageFile.path);
   const streamLength = imageFile.size;
   const filename = uuidv4();
   const options = {
@@ -160,27 +160,16 @@ export const uploadFile = async (req, res) => {
       contentType: imageFile.mimetype, // Use the mimetype from the uploaded file
     },
   };
-  blobService.createBlockBlobFromStream(
-    containerName,
-    filename,
-    stream,
-    streamLength,
-    options,
-    (error, result) => {
-      if (error) {
-        res
-          .status(500)
-          .json({ error: "Failed to upload image to Azure Blob Storage" });
-      } else {
-        res.status(200).json({
-          path:
-            "https://blobimagebungou.blob.core.windows.net/blob/" + filename,
-        });
-      }
+  blobService.createBlockBlobFromStream(containerName, filename, stream, streamLength, options, (error, result) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to upload image to Azure Blob Storage' });
+    } else {
+      imgPath = 'https://blobimagebungou.blob.core.windows.net/blob/' + filename;
     }
-  );
-  return res;
-};
+  });
+  let imgPath = 'https://blobimagebungou.blob.core.windows.net/blob/' + filename;
+  return imgPath;
+}
 
 export const uploadBook = async ({
   title,
@@ -212,7 +201,14 @@ export const uploadBook = async ({
   return response;
 };
 
-export const deleteBook = async (BookId) => {
+export const addImageurlToDb = async (id, url) => {
+  const response = await Books.update({ image: url}, {
+    where: { BookId: id }
+  });
+  return response
+}
+
+export const deleteBook = async(BookId) => {
   await Books.destroy({
     where: {
       BookId,

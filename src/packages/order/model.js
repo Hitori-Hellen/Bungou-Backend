@@ -4,8 +4,9 @@ import Payments from "../payment_details/model";
 import OrderItem from "../order_items/model";
 import User from "../user/model";
 import { DataTypes, Sequelize } from "sequelize";
+import Books from "../book/model";
 
-const Order = dbConfig.define('Order', {
+const Order = dbConfig.define('Orders', {
     OrderId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -16,7 +17,14 @@ const Order = dbConfig.define('Order', {
         type: DataTypes.INTEGER,
         references: {
             model: User,
-            key: 'UserId'
+            key: 'id'
+        }
+    },
+    BookId: {
+      type: DataTypes.INTEGER,
+        references: {
+            model: Books,
+            key: 'BookId'
         }
     },
     amount: {
@@ -32,7 +40,7 @@ const Order = dbConfig.define('Order', {
       type: "TIMESTAMP",
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
-    },  
+    },
 })
 
 setTimeout(() => {
@@ -40,14 +48,15 @@ setTimeout(() => {
     foreignKey: "PaymentId",
     as: "Payments",
   });
-  Order.hasMany(OrderItem, {
-    foreignKey: "id",
-    as: "OrderItem",
-  });
-  Order.hasOne(User, {
+
+  Order.belongsTo(User, {
     foreignKey: "UserId",
     as: "User",
-  })
+  });
+  Order.belongsTo(Books, {
+    foreignKey: "BookId",
+    as: "Books",
+  });
 })
 
 export default Order;

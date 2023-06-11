@@ -1,7 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const DataTypes = require("sequelize");
-    return queryInterface.createTable("Order", {
+    return queryInterface.createTable("Orders", {
        OrderId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -15,20 +15,30 @@ module.exports = {
             key: "id"
         }
     },
+    BookId: {
+      type: DataTypes.INTEGER,
+        references: {
+            model: "Books",
+            key: 'BookId'
+        }
+    },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    createAt: {
-        type: DataTypes.DATE,
-        allowNull: false
+    created_at: {
+      type: "TIMESTAMP",
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
     },
-    state: {
-        type: DataTypes.BOOLEAN,
+    updated_at: {
+      type: "TIMESTAMP",
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
     },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Order");
+    return queryInterface.dropTable("Orders");
   },
 };

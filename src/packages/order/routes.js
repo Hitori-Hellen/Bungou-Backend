@@ -1,6 +1,9 @@
 const router = require("express").Router();
 import * as ctrl from "./controllers";
 
-router.get("/create_payment_url", ctrl.createPaymentUrl);
+router.post("/create_payment_url", ctrl.createPaymentUrl);
+router.get("/getvnpayipn", ctrl.getVnpayIpn);
+router.get("/returnvnpay/:userId/:bookId", ctrl.returnVnpay);
+router.get("/getorder/:id", ctrl.getOrderById);
 
 export default router;
